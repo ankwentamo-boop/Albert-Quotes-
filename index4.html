@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quotes</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #f5f7ff, #eef2ff);
+        color: #2d3748;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e2e8f0;
+        height: 180px;
+        width: min(90vw, 460px);
+        border-radius: 18px;
+        background: white;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #4f46e5, #6366f1);
+        color: white;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        box-shadow: 0 6px 15px rgba(79, 70, 229, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(79, 70, 229, 0.3);
+    }
+
+    .quote-side {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80%;
+        width: 100%;
+    }
+
+    .author-side {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 20%;
+        opacity: 0.7;
+        font-size: medium;
+    }
+</style>
+
+<body>
+
+    <h1> Nkwentamo Albert's Quotes of the Day</h1>
+    <div class="container">
+        <div class="quote-side"></div>
+        <div class="author-side"></div>
+    </div>
+    <button onclick="getQuote()">get Quote</button>
+
+    <script>
+        const quoteEl = document.querySelector(".quote-side");
+        const authorEl = document.querySelector(".author-side");
+
+        async function getQuote() {
+            try {
+                const randomId = Math.floor(Math.random() * 2000);
+                const response = await fetch(`https://dummyjson.com/quotes?limit=1&skip=${randomId}`);
+                const data = await response.json();
+                const quote = data.quotes?.[0]?.quote || "No quote found";
+                const author = data.quotes?.[0]?.author || "Unknown";
+
+                quoteEl.textContent = quote;
+                authorEl.textContent = `~${author}`;
+            } catch (error) {
+                console.log("Something went wrong..", error);
+            }
+        }
+    </script>
+</body>
+
+</html>
