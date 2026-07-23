@@ -92,6 +92,9 @@
         const authorEl = document.querySelector(".author-side");
 
         async function getQuote() {
+            quoteEl.textContent = "Albert's quotes loading...";
+            authorEl.textContent = "";
+
             try {
                 const randomId = Math.floor(Math.random() * 2000);
                 const response = await fetch(`https://dummyjson.com/quotes?limit=1&skip=${randomId}`);
@@ -103,6 +106,8 @@
                 authorEl.textContent = `~${author}`;
             } catch (error) {
                 console.log("Something went wrong..", error);
+                quoteEl.textContent = "Could not load quotes";
+                authorEl.textContent = "";
             }
         }
     </script>
